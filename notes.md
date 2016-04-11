@@ -50,5 +50,8 @@ Gebruik van Cloud9:
 * maak een workspace aan door middel van "clone from git", van je eigen fork die je hierboven aangemaakt hebt.
 * configureer MongoDB
 * installeer web.py
+* 
+
+Maakt het uit op welke manier je een workspace maakt vanuit een GitHub repo? Via ssh (git url) of via https (https url)?
 
 (Zie de readme.md van https://github.com/infvo/nosql.)
