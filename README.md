@@ -10,3 +10,12 @@ Het interface van de server is opgebouwd volgens de REST-principes: Representati
 
 We beschrijven elders deze principes in het kort.
 
+Deze module bouwt voor op de eerdere module: HTML-JS, waarin we JavaScript in de browser introduceren, en HTML-1-Python, waarin we server-side scripting met Python introduceren.
+
+De volgende aspecten zijn nieuw of uitgebreider dan in deze voorafgaande modules:
+
+* REST principes
+* AJAX - asynchrone interactie tussen browser en server, met JSON als formaat;
+* JSON formaat van data
+* Authenticatie
+* 
