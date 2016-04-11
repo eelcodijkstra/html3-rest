@@ -49,6 +49,10 @@ Gebruik van Cloud9:
 
 * maak een workspace aan door middel van "clone from git", van je eigen fork die je hierboven aangemaakt hebt.
 * configureer MongoDB
-* installeer web.py
+* installeer web.py (web server) en pymongo (Python library voor MongoDB).
 
 (Zie de readme.md van https://github.com/infvo/nosql.)
+
+### push naar GitHub
+
+De push vanuit Cloud 9 naar GitHub is niet "soepel": je hebt altijd een wachtwoord nodig? (...terwijl Cloud 9 wel een speciale toegang heeft tot GitHub - via SSH?)
