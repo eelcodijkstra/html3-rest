@@ -51,6 +51,8 @@ Gebruik van Cloud9:
 * configureer MongoDB
 * installeer web.py (web server) en pymongo (Python library voor MongoDB).
 
+Maakt het uit op welke manier je een workspace maakt vanuit een GitHub repo? Via ssh (git url) of via https (https url)?
+
 (Zie de readme.md van https://github.com/infvo/nosql.)
 
 ### push naar GitHub
