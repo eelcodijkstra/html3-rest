@@ -2,14 +2,22 @@
 // model of todo-element and todo-list
 
 var todos  = [];           // start as empty list
-var nextId = 0;            // id of next elt to be created
 
 var renderTodos = function (todos) {}; // signal view(s)
 var saveList = function (todos) {};    // save model
 
+function nextId() {
+  max = -1;
+  todos.forEach(function(todo) {
+    if (todo.id > max) {
+      max = todo.id;
+    }
+  });
+  return max + 1;
+}
+
 function createTodo(done, text) {
-  todos.push({id: nextId, done: done, text: text});
-  nextId += 1;
+  todos.push({id: nextId(), done: done, text: text});
   saveList(todos);
   renderTodos(todos);
 }
@@ -65,6 +73,29 @@ saveList = function (todoList) {
 };
 
 // server
+
+function getUser(username, cont) {
+  var data = new FormData();
+  data.append("username", username);
+  data.append("password", "geheim");
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", cont);
+  req.open("GET", "users?" + "username=" + username +"&password=" + "geheim");
+  req.send(data);
+}
+
+function createUser(username, password, cont) {
+  var data = new FormData();
+  data.append("username", username);
+  data.append("password", "geheim");
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", cont);
+  req.open("GET", "users?" + "username=" + username +"&password=" + "geheim");
+  req.send(data);
+}
+
+function getServerList(userid) {
+}
 
 function createServerItem() {
 }
@@ -176,3 +207,7 @@ selectOpenButton.onclick = function () {
 };
 
 initList();
+
+getUser("henk", function (resp) {
+  alert(this.responseText);
+});

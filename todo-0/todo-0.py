@@ -2,6 +2,7 @@ import web
 import pymongo
 from bson.objectid import ObjectId
 import time
+import json
 
 urls = (
     '/','Index',
@@ -10,7 +11,8 @@ urls = (
     '/users','Users',
     '/users/([0-9a-f]+)/todos/([0-9a-f]+)', 'UserTodoElement',
     '/users/([0-9a-f]+)/todos', 'UserTodoList',
-    '/scripts/([a-z][a-z0-9]*.js)', 'Script'
+    '/scripts/([a-z][a-z0-9]*.js)', 'Script',
+    '/style/([a-z][a-z0-9]*.css)', 'Style'
 )
 
 app = web.application(urls,globals())
@@ -36,6 +38,14 @@ class Script:
         try:
             f = open('scripts/' + file, 'r')
             return f.read()
+        except:
+            return '404' # you can send an 404 error here if you want
+
+class Style:
+    def GET(self, file):
+        try:
+            f = open('style/' + file, 'r')
+            return f.read
         except:
             return '404' # you can send an 404 error here if you want
 
@@ -76,37 +86,33 @@ class Logout:
 
 class Users:
     def GET(self):
-        data = web.input()
+        data = web.input(username="")
         if data.username == "":
-            return render.index(username="", userid=0)
+            return json.dumps({"username": "", "userid": ""})
         else:
-            web.setcookie("username", data.username)
+            # web.setcookie("username", data.username)
             user = db.users.find_one({"username": data.username})
             if user == None:
-                userid = db.users.insert_one(
-                    {"username": data.username}).inserted_id
+                return json.dumps({"username": "", "userid": ""})
             else:
-                userid = user["_id"]
-            raise web.seeother("/users/" + str(userid) + "/todos")
+                return json.dumps({"username": data.username,
+                                   "userid": str(user["_id"])})
 
     def POST(self):
         ## define new user
-        data = web.input()
-        if not "username" in data.keys() or data.username == "":
-            raise web.seeother("/login")
-        if not "password" in data.keys() or data.password == "":
-            raise web.seeother("/login")
-        if not "retype" in data.keys() or data.retype == "":
-            raise web.seeother("/login")
-        if data.password != data.retype:
-            raise web.seeother("/login")
+        data = web.input(username="", password="")
+        if data.username == "":
+            return json.dumps({"username": "", "userid": ""})
+        if data.password == "":
+            return json.dumps({"username": "", "userid": ""})
         user = db.users.find_one({"username": data.username})
         if user != None:
-            raise web.seeother("/login")
+            return json.dumps({"username": "", "userid": ""})
         id = db.users.insert_one(
                 {"username": data.username,
                  "password": data.password}).inserted_id
-        return render.index(username = data.username, userid = id)
+        return json.dumps({"username": data.username,
+                           "userid": str(id)})
 
 class UserTodoElement:
     def GET(self, userid, eltid):

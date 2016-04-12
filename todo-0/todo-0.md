@@ -30,11 +30,32 @@ We moeten voor deze toepassing ook rekening houden met authenticatie (en authori
 
 We gebruiken de volgende combinatie van requests en URLs:
 
-| URL | reqest | resultaat |
+| URL                | request | effect      | resultaat    |
+| :---               | :---    | :---        | :---         |
+| /users?username=nm | GET     | read        | user-doc     |
+| /users?username=nm | POST    | create user | user-doc     |
+| /users/id/todos    | GET     | read list   | todo-list    |
+| /users/id/todos    | POST    | create item | item-id      |
+| /users/id/todos/id | GET     | read        | todo-item    |
+| /users/id/todos/id | PUT     | update      | todo-item(?) |
+| /users/id/todos/id | DELETE  | delete      | (?)          |
+| | | | |
+| /todos/id          | PUT     | update      | (?)          |
+| /todos             | GET     | read list   | todo-docs |
+
+* user-doc: `{id, name}`
+
+NB: er zijn geen afzonderlijke todo-lists: alle todo's van een gebruiker vormen samen één lijst. (Dat is een ontwerpkeuze; er zijn andere keuzes mogelijk.)
+
+We hebben (nog) geen voorzieningen voor: het verwijderen van een gebruiker; het verwijderen van alle todo's van een gebruiker; ...
+
+
 
 Voor al deze opdrachten is het resultaat in JSON-representatie.
 
 (De enige niet-JSON representatie is voor de hele toepassing.)
+
+NB: omdat we de requests vanuit JavaScript genereren, zijn we niet beperkt tot GET en POST: we kunnen ook de andere requests gebruiken.
 
 ### Opmerkingen en vragen
 
@@ -61,3 +82,10 @@ De meeste attribuut-waarden zijn van type string - ook als deze een integer voor
 
 Als we de lijst van Items bewaren, moeten we ook de `nextId` opslaan, om te voorkomen dat we een id dubbel gebruiken. (Of, we moeten nextId uitrekenen als de eerstvolgende id die groter is dan de max. id in de lijst...)
 
+Een andere aanpak is om een random generator te gebruiken voor de identifiers. Als deze "random" genoeg is kunnen we deze ook gebruiken om identifiers te genereren die in gedistribueerd opzicht uniek zijn.
+
+Als we de identifiers van MongoDB gebruiken dan hebben we dat min of meer automatisch.
+
+#### sturing
+
+De sturing (bijv. welke pagina/inhoud getoond wordt) vindt in dit geval voornamelijk plaats vanuit JavaScript: de server levert alleen de "kale data".
