@@ -47,14 +47,17 @@ We behandelen in deze module de volgende concepten:
 
 Gebruik van Cloud9:
 
-* maak een workspace aan door middel van "clone from git", van je eigen fork die je hierboven aangemaakt hebt.
+* maak een workspace aan door middel van "clone from git", van je eigen fork die je hierboven aangemaakt hebt. Gebruik als URL de ssh/git-URL (e.g., `git@github.com:eelcodijkstra/html3-rest.git`) Zet hiervoor eventueel de clone-URL in GitHub op SSH, in plaats van op HTTPS.
 * configureer MongoDB
 * installeer web.py (web server) en pymongo (Python library voor MongoDB).
 
 Maakt het uit op welke manier je een workspace maakt vanuit een GitHub repo? Via ssh (git url) of via https (https url)?
 
+> Ja: als je ssh gebruikt, dan wordt je ssh-key gebruikt die je opgegeven hebt voor de verbinding van Cloud 9 naar GitHub. Je hoeft dan niet steeds een wachtwoord op te geven bij een push-opdracht. Dit maakt het leven veel gemakkelijker.
+
 (Zie de readme.md van https://github.com/infvo/nosql.)
 
 ### push naar GitHub
 
-De push vanuit Cloud 9 naar GitHub is niet "soepel": je hebt altijd een wachtwoord nodig? (...terwijl Cloud 9 wel een speciale toegang heeft tot GitHub - via SSH?)
+(Als je als URL de ssh/git-URL gebruikt hebt, dan kun je de git push-opdracht gebruiken zonder dat er steeds om een wachtwoord gevraagd wordt. Als je de https-URL gebruikt hebt, dan wordt steeds om je wachtwoord gevraagd.)
+

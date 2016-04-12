@@ -1,0 +1,24 @@
+$def with (username, userid)
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Todo-0</title>
+  </head>
+  <body>
+    <h1>Todo</h1>
+
+    <div id=todoDiv data-user=$username data-userid=$userid>
+    </div>
+    <hr>
+    <div>
+      Create new item:
+      <input id="createItemInput" type="text" name="text" value=""
+             placeholder="what needs to be done?"><br>
+    </div>
+    <button id="selectAllButton">Select all</button>
+    <button id="selectOpenButton">Select open</button>
+    <button id="selectDoneButton">Select done</button>
+    <hr>
+    <script src="scripts/myscript.js"></script>
+  </body>
+</html>
