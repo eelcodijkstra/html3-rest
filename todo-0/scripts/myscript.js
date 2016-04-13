@@ -1,3 +1,5 @@
+/*global document, alert, localStorage, FormData, XMLHttpRequest
+*/
 
 // model of todo-element and todo-list
 
@@ -7,7 +9,7 @@ var renderTodos = function (todos) {}; // signal view(s)
 var saveList = function (todos) {};    // save model
 
 function nextId() {
-  max = -1;
+  var max = -1;
   todos.forEach(function(todo) {
     if (todo.id > max) {
       max = todo.id;
@@ -136,7 +138,8 @@ function mkTodoItem(todo) {
 
 function mkTodos(todoList) {
   var html = "";
-  for (var i = 0; i < todoList.length; i++) {
+  var i = 0;
+  for (i = 0; i < todoList.length; i += 1) {
     html = html + mkTodoItem(todoList[i]);
   }
   return html;
@@ -145,14 +148,10 @@ function mkTodos(todoList) {
 var todoDiv = document.getElementById("todoDiv");
 todoDiv.innerHTML = mkTodos(todos);
 
-renderTodos = function (todoList) {
-  todoDiv.innerHTML = mkTodos(selectedItems(todoList));
-};
-
 function todoClickHandler(evt) {
-  if (evt.target.nodeName == 'INPUT' && evt.target.type == 'checkbox') {
+  if (evt.target.nodeName === 'INPUT' && evt.target.type === 'checkbox') {
     updateTodoDone(parseInt(evt.target.dataset.id), evt.target.checked);
-  } else if (evt.target.nodeName == 'BUTTON') {
+  } else if (evt.target.nodeName === 'BUTTON') {
     removeTodoItem(parseInt(evt.target.dataset.id));
   }
 }
@@ -204,6 +203,10 @@ selectDoneButton.onclick = function () {
 selectOpenButton.onclick = function () {
   selectedItems = openItems;
   renderTodos(todos);
+};
+
+renderTodos = function (todoList) {
+  todoDiv.innerHTML = mkTodos(selectedItems(todoList));
 };
 
 initList();

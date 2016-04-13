@@ -16,6 +16,7 @@ We behandelen in deze module de volgende concepten:
 * REST (REST-API)
 * JSON (en BSON)
 * AJAX (met JSON als representatie)
+    * asynchrone interactie; event handling; promises?
 * Authenticatie(?)
 * synchronisatie van model?
 
