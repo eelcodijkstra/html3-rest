@@ -102,6 +102,7 @@ class Users:
     def POST(self):
         ## define new user
         data = web.input(username="", password="")
+        web.header('Content-Type', 'application/json')
         if data.username == "" or data.password == "":
             return json.dumps({"username": "", "userid": ""})
         user = db.users.find_one({"username": data.username})

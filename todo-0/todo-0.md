@@ -71,7 +71,7 @@ Voor al deze opdrachten is het resultaat in JSON-representatie.
 
 NB: omdat we de requests vanuit JavaScript genereren, zijn we niet beperkt tot GET en POST: we kunnen ook de andere requests gebruiken.
 
-### Asynchroon
+### AJAX - Asynchroon
 
 De eerste "A" in AJAX staat voor *asynchroon*. De "send" functie die het verzoek (request) verstuurt naar de server wacht niet tot het antwoord (response) ontvangen is. Het ontvangen van dit antwoord is een soort *event* waarvoor je een handler kunt (moet) definiëren. 
 
@@ -85,6 +85,11 @@ Je kunt deze asynchrone manier van programmeren nog op een andere manier vormgev
 
 * http://www.html5rocks.com/en/tutorials/es6/promises/#toc-promisifying-xmlhttprequest
 
+#### XMLHttpRequest
+
+* wat is de volgorde: new/open/send - en bijv. het toevoegen van een handler (typisch: voor de new)? toevoegen van een header? 
+
+Alleen bij POST geef je data als parameter van `send`. Dit kan bijv. met `FormData`, maar het kan ook een eenvoudige string zijn (vgl. de parameters bij GET).
 
 ### Opmerkingen en vragen
 
@@ -132,3 +137,18 @@ ALs we vanuit de server een JSON-resultaat willen terugsturen, dan moeten we dit
 * `web.header('Content-Type', 'application/json')`
 
 We kunnen in een JSON-resultaat eenvoudig een foutcode opnemen, bijvoorbeeld voor het geval dat er een nieuwe gebruiker aangemeld wordt terwijl de naam al in gebruik is.
+
+### AJAX
+
+* wat is de handigste "toestand" om een handler aan te koppelen? `load`?
+* hoe controleer je het resultaat?
+* welke handler(s) heb je nodig voor de afhandeling van fouten?
+
+### Stappen
+
+* [x] Uitproberen van AJAX, in browser (JS; asynchroon) en server (JSON resultaat).
+* [ ] Inloggen van gebruiker, sessie-administratie via AJAX
+* [ ] Opvragen (read) van de todo-list van de gebruiker via AJAX
+* [ ] Creatie (create) van een todo-item via AJAX
+* [ ] Aanpassen (update) van een todo-item via AJAX
+* [ ] Verwijderen (delete) van een todo-item via AJAX
