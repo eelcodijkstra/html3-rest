@@ -10,6 +10,20 @@ Een nieuw probleem bij deze implementatie is de manier waarop we authenticatie k
 
 Een eventuele afluisteraar kan weten met welke codes het wachtwoord versleuteld is; en, welke methode gebruikt wordt voor het versleutelen. Het wachtwoord kan dan gekraakt worden door allerlei wachtwoorden te proberen, en te zien of dit eenzelfde versleutelde waarde geeft. 
 
+Voor de Trello-API moet de toepassing steeds de key oversturen naar de server. (Als je geen gebruik maakt van https, is die key kwetsbaar: deze kan zo afgeluisterd en gekopieerd worden.) Het Trello-API maakt wel altijd gebruik van https. (Er is eigenlijk alles voor te zeggen om voor dergelijke APIs, met gebruikers-data, https te gebruiken.)
+
+#### OAuth
+
+Nog verder uitzoeken: het gebruik van OAuth 2.0.
+
+#### Gebruikers en sessies
+
+* we slaan de gebruikersnaam op in de browser - in localStorage;
+* we houden in de server een "session" bij. Deze session heeft een beperkte levensduur. De key van deze session moet bij elk request meegestuurd worden (in de URL? parameters? in een header?).
+* bij het starten van een nieuwe sessie moet de gebruiker inloggen (authenticatie).
+
+Vraag: kun je in de browser op een of andere manier een unieke identificatie van de computer opvragen? (Het IP-adres is niet echt bruikbaar, omdat het ip-adres van een computer kan veranderen, afhankelijk van de context. Eigenlijk is een MAC-adres beter - maar de server kan dit niet controleren.)
+
 ### Model
 
 We gebruiken dezelfde aanpak als in Web-1 (JS in de browser), met enkele aanvullingen:
@@ -57,6 +71,21 @@ Voor al deze opdrachten is het resultaat in JSON-representatie.
 
 NB: omdat we de requests vanuit JavaScript genereren, zijn we niet beperkt tot GET en POST: we kunnen ook de andere requests gebruiken.
 
+### Asynchroon
+
+De eerste "A" in AJAX staat voor *asynchroon*. De "send" functie die het verzoek (request) verstuurt naar de server wacht niet tot het antwoord (response) ontvangen is. Het ontvangen van dit antwoord is een soort *event* waarvoor je een handler kunt (moet) definiëren. 
+
+> Er zijn verschillende soorten events, voor de verschillende stadia van het versturen van het request, en van het ontvangen van de response. Deze verschillende stadia zijn: (progress, load, error, abort). Er kan ook iets mis gaan met het verzoek (error, abort). In het bijzonder kun je van een omvangrijke response (een groot bestand) nagaan welk deel al geladen is: daarmee kun je een "progress-indicator" voor de gebruiker maken.
+
+Het gebruik van dergelijke asynchrone events leidt tot een speciale manier van programmeren.
+
+#### Promises
+
+Je kunt deze asynchrone manier van programmeren nog op een andere manier vormgeven, door middel van *promises*.
+
+* http://www.html5rocks.com/en/tutorials/es6/promises/#toc-promisifying-xmlhttprequest
+
+
 ### Opmerkingen en vragen
 
 We kunnen het model goed scheiden van de views: voor het interface hiertussen hebben we de volgende functies:
@@ -89,3 +118,17 @@ Als we de identifiers van MongoDB gebruiken dan hebben we dat min of meer automa
 #### sturing
 
 De sturing (bijv. welke pagina/inhoud getoond wordt) vindt in dit geval voornamelijk plaats vanuit JavaScript: de server levert alleen de "kale data".
+
+Een deel van de functionaliteit verschuift van de server (hier: Python) naar de browser (JavaScript):
+
+* controle op de invoer van de gebruiker, bijvoorbeeld in het geval van een nieuw wachtwoord;
+* sturing van de inhoud/pagina die getoond wordt;
+
+
+### JSON resultaten
+
+ALs we vanuit de server een JSON-resultaat willen terugsturen, dan moeten we dit ook in de header-informatie opgeven.
+
+* `web.header('Content-Type', 'application/json')`
+
+We kunnen in een JSON-resultaat eenvoudig een foutcode opnemen, bijvoorbeeld voor het geval dat er een nieuwe gebruiker aangemeld wordt terwijl de naam al in gebruik is.

@@ -87,6 +87,7 @@ class Logout:
 class Users:
     def GET(self):
         data = web.input(username="")
+        web.header('Content-Type', 'application/json')
         if data.username == "":
             return json.dumps({"username": "", "userid": ""})
         else:
@@ -101,9 +102,7 @@ class Users:
     def POST(self):
         ## define new user
         data = web.input(username="", password="")
-        if data.username == "":
-            return json.dumps({"username": "", "userid": ""})
-        if data.password == "":
+        if data.username == "" or data.password == "":
             return json.dumps({"username": "", "userid": ""})
         user = db.users.find_one({"username": data.username})
         if user != None:
