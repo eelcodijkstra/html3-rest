@@ -18,8 +18,8 @@ function nextId() {
   return max + 1;
 }
 
-function createTodo(done, text) {
-  todos.push({id: nextId(), done: done, text: text});
+function createTodo(id, done, text) {
+  todos.push({id: id, done: done, text: text});
   saveList(todos);
   renderTodos(todos);
 }
@@ -76,14 +76,12 @@ saveList = function (todoList) {
 
 // server
 
-function getUser(username, cont) {
+function getUser(username, passwd, cont) {
   var data = new FormData();
-  data.append("username", username);
-  data.append("password", "geheim");
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username +"&password=" + "geheim");
-  req.send(data);
+  req.open("GET", "users?" + "username=" + username +"&password=" + passwd);
+  req.send();
 }
 
 function createUser(username, password, cont) {
@@ -96,7 +94,17 @@ function createUser(username, password, cont) {
   req.send(data);
 }
 
-function getServerList(userid) {
+function getLogin(username, passwd, cont) {
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", cont);
+  req.open("GET", "login?" + "username=" + username +"&password=" + passwd);
+  req.send();
+}
+function getServerList(userid, cont) {
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", cont);
+  req.open("GET", "users/" + userid + "/todos");
+  req.send();
 }
 
 function createServerItem() {
@@ -105,9 +113,9 @@ function createServerItem() {
 // test
 
 function testTodoList() {
-  createTodo(false, "Boodschappen bij Jumbo");
-  createTodo(false, "Rekening elektra betalen");
-  createTodo(true, "Huiswerk maken");
+  createTodo(nextId(), false, "Boodschappen bij Jumbo");
+  createTodo(nextId(), false, "Rekening elektra betalen");
+  createTodo(nextId(), true, "Huiswerk maken");
 }
 
 // rendering/view
@@ -161,7 +169,7 @@ todoDiv.onclick = todoClickHandler;
 var createItemInput = document.getElementById("createItemInput");
 
 function createItemHandler () {
-  createTodo(false, createItemInput.value);
+  createTodo(nextId(), false, createItemInput.value);
   createItemInput.value = "";
   createItemInput.placeholder = "what to do?";
 }
@@ -211,15 +219,44 @@ renderTodos = function (todoList) {
 
 initList();
 
-var loginElt = document.getElementById("loginElt");
+function handleUserList() {
+  alert("list from server: " + this.responseText);
+  var data = JSON.parse(this.responseText);
+  var userid = data.userid;
+  todos = [];
+  data.todos.forEach(function (elt) {
+    createTodo(elt._id, elt.done, elt.description);
+  });
+}
 
-function checkUser() {
-  if (localStorage.username != null) {
-  } else {
-    loginElt.style.display = "none";
+function loginResponseHandler() {
+  var resp = JSON.parse(this.responseText);
+  alert("user OK: " + this.responseText);
+  if (resp.username != null) {
+    localStorage.username = resp.username;
+    localStorage.userid - resp.userid;
+    getServerList(resp.userid, handleUserList);
   }
 }
 
-getUser("henk", function (resp) {
-  alert(this.responseText);
-});
+function loginHandler(evt) {
+  var username = evt.target.username.value;
+  var passwd = evt.target.passwd.value;
+  alert("username: " + username + " password: " + passwd);
+  getUser(username, passwd, loginResponseHandler);
+  return false; // prevent further form action
+}
+
+var loginElt = document.getElementById("loginElt");
+
+loginElt.onsubmit = loginHandler;
+
+function checkUser() {
+  if (localStorage.username == null) {
+    loginElt.style.display = "block";
+  } else {
+    // loginElt.style.display = "none";
+  }
+}
+
+checkUser();

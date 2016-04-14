@@ -64,15 +64,17 @@ class Index:
 class Login:
     def GET(self):
         data = web.input()
+        web.header('Content-Type', 'application/json')
         if not "username" in data.keys() or data.username == "" or \
            not "password" in data.keys() or data.password == "":
-            return render.login()
+            return json.dumps({"username": "", "userid": ""})
         user = db.users.find_one({"username": data.username})
         if user == None or user["password"] != data.password:
-            return render.login()
+            return json.dumps({"username": "", "userid": ""})
         sessionid = startSession(user["_id"])
         web.setcookie("sessionid", sessionid)
-        return render.index(username=data.username, userid=user["_id"])
+        return json.dumps({"username": data.username,
+                           "userid": str(user["_id"])})
 
 class Logout:
     def GET(self):
@@ -131,7 +133,12 @@ class UserTodoElement:
 class UserTodoList:
     def GET(self, userid):
         todos = db.todos.find({"userid": userid})
-        return render.usertodos(userid=userid, todolist=todos)
+        list = []
+        for todo in todos:
+            todo["_id"] = str(todo["_id"]) # necessary for JSONify
+            list.append(todo)
+        web.header('Content-Type', 'application/json')
+        return json.dumps({"todos": list, "userid": userid})
 
     def POST(self, userid):
         data = web.input()

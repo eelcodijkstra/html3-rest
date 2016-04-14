@@ -156,17 +156,25 @@ ALs we vanuit de server een JSON-resultaat willen terugsturen, dan moeten we dit
 
 We kunnen in een JSON-resultaat eenvoudig een foutcode opnemen, bijvoorbeeld voor het geval dat er een nieuwe gebruiker aangemeld wordt terwijl de naam al in gebruik is.
 
+Voor het omzetten van een Python-object in JSON moeten we eerst de ObjectId-properties omzetten in strings.
+
 ### AJAX
 
 * wat is de handigste "toestand" om een handler aan te koppelen? `load`?
 * hoe controleer je het resultaat?
 * welke handler(s) heb je nodig voor de afhandeling van fouten?
 
+### Opmerkingen
+
+* de scripts moeten echt na de html-inhoud staan!
+* debugging is lastiger in het geval van JSON-resultaten: in het geval van een fout stuurt de server een html-pagina met debug-informatie, in plaats van JSON. Hoe kunnen we daarvan gebruik maken?
+
 ### Stappen
 
 * [x] Uitproberen van AJAX, in browser (JS; asynchroon) en server (JSON resultaat).
 * [ ] Inloggen van gebruiker, sessie-administratie via AJAX
-* [ ] Opvragen (read) van de todo-list van de gebruiker via AJAX
+* [x] Opvragen (read) van de todo-list van de gebruiker via AJAX
 * [ ] Creatie (create) van een todo-item via AJAX
 * [ ] Aanpassen (update) van een todo-item via AJAX
 * [ ] Verwijderen (delete) van een todo-item via AJAX
+* [ ] Aanmelden/toevoegen van een nieuwe gebruiker via AJAX
