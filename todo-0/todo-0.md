@@ -129,6 +129,24 @@ Een deel van de functionaliteit verschuift van de server (hier: Python) naar de 
 * controle op de invoer van de gebruiker, bijvoorbeeld in het geval van een nieuw wachtwoord;
 * sturing van de inhoud/pagina die getoond wordt;
 
+### Testen
+
+#### Testen van REST interfaces
+
+* curl
+* https://www.hurl.it
+    * nb: dit kan alleen voor publieke website, niet voor lokale (localhost).
+* https://www.runscope.com/oauth2_tool
+
+### Meerdere pagina's?
+
+Voor een toepassing kunnen we kiezen uit een enkele pagina met verschillende interface-onderdelen, of meerdere pagina's met per pagina een min of meer vast interface.
+
+In een mobile-first toepassing gebruik je vaak meerdere pagina's, voor de verschillende soorten interactie. Programma's als Codiqa werken ook op deze manier. Het gebruikersinterface van een pagina is dan vast: dit wordt niet (of nauwelijks) beïnvloed door een "mode".
+
+Als er meerdere pagina's zijn moet je ook een navigatie-systeem hebben.
+
+Voor de todo-toepassing hebben we aan twee pagina's voldoende: de gebruikerspagina, en de todo-pagina.
 
 ### JSON resultaten
 

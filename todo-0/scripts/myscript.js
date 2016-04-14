@@ -211,6 +211,15 @@ renderTodos = function (todoList) {
 
 initList();
 
+var loginElt = document.getElementById("loginElt");
+
+function checkUser() {
+  if (localStorage.username != null) {
+  } else {
+    loginElt.style.display = "none";
+  }
+}
+
 getUser("henk", function (resp) {
   alert(this.responseText);
 });
