@@ -169,12 +169,25 @@ Voor het omzetten van een Python-object in JSON moeten we eerst de ObjectId-prop
 * de scripts moeten echt na de html-inhoud staan!
 * debugging is lastiger in het geval van JSON-resultaten: in het geval van een fout stuurt de server een html-pagina met debug-informatie, in plaats van JSON. Hoe kunnen we daarvan gebruik maken?
 
+Voor het aanmaken van een nieuw item op de server moeten we de verschillende soorten operaties goed organiseren:
+
+* het aanmaken van een nieuw item op de server; dit levert de id van het nieuwe element als resultaat;
+* pas daarna kunnen we het item toevoegen aan de lokale todo-lijst;
+
+(De functie nextId is niet meer nodig; tenzij we de verantwoordelijkheid voor het uitdelen van de id's in de toekomst willen verleggen.)
+
+De interface-conventie van booleans in formulieren is: aanwezigheid vs. afwezigheid, dus niet de waarde van de boolean. Dit hoeven we niet over te nemen in de AJAX-versie, maar dan moeten we de code wel aanpassen. (Dit ging mis bij het aanmaken van een nieuw item.)
+
+Bij het aanmaken (en veranderen) van een nieuw element moeten we de waarde in localStorage ook aanpassen. Deze is nu niet in overeenstemming met de server-waarde (na "create").
+
+De representatie van de todo-items in het JSON-interface is niet consistent; vgl. de list (GET) vs. een enkel element bij create (POST) - beide "UserTodoList".
+
 ### Stappen
 
 * [x] Uitproberen van AJAX, in browser (JS; asynchroon) en server (JSON resultaat).
 * [ ] Inloggen van gebruiker, sessie-administratie via AJAX
 * [x] Opvragen (read) van de todo-list van de gebruiker via AJAX
-* [ ] Creatie (create) van een todo-item via AJAX
+* [x] Creatie (create) van een todo-item via AJAX
 * [ ] Aanpassen (update) van een todo-item via AJAX
 * [ ] Verwijderen (delete) van een todo-item via AJAX
 * [ ] Aanmelden/toevoegen van een nieuwe gebruiker via AJAX

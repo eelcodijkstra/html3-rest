@@ -18,6 +18,12 @@ function nextId() {
   return max + 1;
 }
 
+function addTodo(id, done, text) {
+  todos.push({id: id, done: done, text: text});
+  saveList(todos);
+  renderTodos(todos);
+}
+
 function createTodo(id, done, text) {
   todos.push({id: id, done: done, text: text});
   saveList(todos);
@@ -107,15 +113,21 @@ function getServerList(userid, cont) {
   req.send();
 }
 
-function createServerItem() {
+function createTodoItem(userid, text, cont) {
+  var data = new FormData();
+  var req = new XMLHttpRequest();
+  data.append("descr", text);
+  req.addEventListener("load", cont);
+  req.open("POST", "users/" + userid + "/todos");
+  req.send(data);
 }
 
 // test
 
 function testTodoList() {
-  createTodo(nextId(), false, "Boodschappen bij Jumbo");
-  createTodo(nextId(), false, "Rekening elektra betalen");
-  createTodo(nextId(), true, "Huiswerk maken");
+  createTodo("0a", false, "Boodschappen bij Jumbo");
+  createTodo("0b", false, "Rekening elektra betalen");
+  createTodo("0c", true, "Huiswerk maken");
 }
 
 // rendering/view
@@ -158,9 +170,9 @@ todoDiv.innerHTML = mkTodos(todos);
 
 function todoClickHandler(evt) {
   if (evt.target.nodeName === 'INPUT' && evt.target.type === 'checkbox') {
-    updateTodoDone(parseInt(evt.target.dataset.id), evt.target.checked);
+    updateTodoDone(evt.target.dataset.id, evt.target.checked);
   } else if (evt.target.nodeName === 'BUTTON') {
-    removeTodoItem(parseInt(evt.target.dataset.id));
+    removeTodoItem(evt.target.dataset.id);
   }
 }
 
@@ -168,8 +180,13 @@ todoDiv.onclick = todoClickHandler;
 
 var createItemInput = document.getElementById("createItemInput");
 
+function handleCreatedItem() {
+  var item = JSON.parse(this.responseText);
+  addTodo(item.id, item.done, item.descr);
+}
+
 function createItemHandler () {
-  createTodo(nextId(), false, createItemInput.value);
+  createTodoItem(localStorage.userid, createItemInput.value, handleCreatedItem);
   createItemInput.value = "";
   createItemInput.placeholder = "what to do?";
 }
@@ -234,7 +251,7 @@ function loginResponseHandler() {
   alert("user OK: " + this.responseText);
   if (resp.username != null) {
     localStorage.username = resp.username;
-    localStorage.userid - resp.userid;
+    localStorage.userid = resp.userid;
     getServerList(resp.userid, handleUserList);
   }
 }

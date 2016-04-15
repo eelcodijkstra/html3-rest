@@ -142,12 +142,12 @@ class UserTodoList:
 
     def POST(self, userid):
         data = web.input()
-        db.todos.insert_one(
-            {"description": data.descr,
-             "done": "done" in data.keys(),
-             "userid": userid}
-        )
-        raise web.seeother("/users/" + userid + "/todos")
+        done = "done" in data.keys()
+        id = db.todos.insert_one({"description": data.descr,
+                                  "done": done,
+                                  "userid": userid}).inserted_id
+        web.header('Content-Type', 'application/json')
+        return json.dumps({"id": str(id), "done": done, "descr": data.descr})
 
 if __name__=='__main__':
     app.run()
