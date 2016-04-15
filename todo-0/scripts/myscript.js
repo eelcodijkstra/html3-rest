@@ -10,7 +10,7 @@ var saveList = function (todos) {};    // save model
 
 function nextId() {
   var max = -1;
-  todos.forEach(function(todo) {
+  todos.forEach(function (todo) {
     if (todo.id > max) {
       max = todo.id;
     }
@@ -86,7 +86,7 @@ function getUser(username, passwd, cont) {
   var data = new FormData();
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username +"&password=" + passwd);
+  req.open("GET", "users?" + "username=" + username + "&password=" + passwd);
   req.send();
 }
 
@@ -96,14 +96,14 @@ function createUser(username, password, cont) {
   data.append("password", "geheim");
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username +"&password=" + "geheim");
+  req.open("GET", "users?" + "username=" + username + "&password=" + "geheim");
   req.send(data);
 }
 
 function getLogin(username, passwd, cont) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
-  req.open("GET", "login?" + "username=" + username +"&password=" + passwd);
+  req.open("GET", "login?" + "username=" + username + "&password=" + passwd);
   req.send();
 }
 function getServerList(userid, cont) {
@@ -185,7 +185,7 @@ function handleCreatedItem() {
   addTodo(item.id, item.done, item.descr);
 }
 
-function createItemHandler () {
+function createItemHandler() {
   createTodoItem(localStorage.userid, createItemInput.value, handleCreatedItem);
   createItemInput.value = "";
   createItemInput.placeholder = "what to do?";
@@ -249,7 +249,7 @@ function handleUserList() {
 function loginResponseHandler() {
   var resp = JSON.parse(this.responseText);
   alert("user OK: " + this.responseText);
-  if (resp.username != null) {
+  if (resp.username !== null) {
     localStorage.username = resp.username;
     localStorage.userid = resp.userid;
     getServerList(resp.userid, handleUserList);
@@ -269,7 +269,7 @@ var loginElt = document.getElementById("loginElt");
 loginElt.onsubmit = loginHandler;
 
 function checkUser() {
-  if (localStorage.username == null) {
+  if (localStorage.username === null) {
     loginElt.style.display = "block";
   } else {
     // loginElt.style.display = "none";
