@@ -6,27 +6,9 @@
 var todos  = [];           // start as empty list
 
 var renderTodos = function (todos) {}; // signal view(s)
-var saveList = function (todos) {};    // save model
-
-function nextId() {
-  var max = -1;
-  todos.forEach(function (todo) {
-    if (todo.id > max) {
-      max = todo.id;
-    }
-  });
-  return max + 1;
-}
 
 function addTodo(id, done, text) {
   todos.push({id: id, done: done, text: text});
-  saveList(todos);
-  renderTodos(todos);
-}
-
-function createTodo(id, done, text) {
-  todos.push({id: id, done: done, text: text});
-  saveList(todos);
   renderTodos(todos);
 }
 
@@ -41,19 +23,16 @@ function updateTodo(id, done, text) {
   var todo = todoElt(id);
   todo.done = done;
   todo.text = text;
-  saveList(todos);
   renderTodos(todos);
 }
 
 function updateTodoDone(id, done) {
   todoElt(id).done = done;
-  saveList(todos);
   renderTodos(todos);
 }
 
 function updateTodoText(id, text) {
   todoElt(id).text = text;
-  saveList(todos);
   renderTodos(todos);
 }
 
@@ -61,24 +40,8 @@ function removeTodoItem(id) {
   todos = todos.filter(function (item) {
     return item.id !== id;
   });
-  saveList(todos);
   renderTodos(todos);
 }
-
-// Persistence
-
-function initList() {
-  if (localStorage.todoList && localStorage.todoList !== "undefined") {
-    todos = JSON.parse(localStorage.todoList);
-    renderTodos(todos);
-  } else {
-    testTodoList();
-  }
-}
-
-saveList = function (todoList) {
-  localStorage.todoList = JSON.stringify(todoList);
-};
 
 // server
 
@@ -106,6 +69,7 @@ function getLogin(username, passwd, cont) {
   req.open("GET", "login?" + "username=" + username + "&password=" + passwd);
   req.send();
 }
+
 function getServerList(userid, cont) {
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
@@ -122,12 +86,28 @@ function createTodoItem(userid, text, cont) {
   req.send(data);
 }
 
-// test
+function deleteTodoItem(userid, eltid, cont) {
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", cont);
+  req.open("DELETE", "users/" + userid + "/todos/" + eltid);
+  req.send()
+}
 
-function testTodoList() {
-  createTodo("0a", false, "Boodschappen bij Jumbo");
-  createTodo("0b", false, "Rekening elektra betalen");
-  createTodo("0c", true, "Huiswerk maken");
+function updateTodoItem(userid, eltid, done, text, cont) {
+  var data = new FormData();
+  var req = new XMLHttpRequest();
+  data.append("descr", text);
+  if (done) {
+    data.append("done", done);
+  }
+  req.addEventListener("load", cont);
+  req.open("POST", "users/" + userid + "/todos/" + eltid);
+  req.send(data)
+}
+
+function updateTodoItemDone(userid, eltid, done, cont) {
+  var elt = todoElt(eltid);
+  updateTodoItem(userid, eltid, done, elt.text, cont);
 }
 
 // rendering/view
@@ -140,7 +120,7 @@ function mkElt(tag, attrs, content) {
 function mkInputElt(type, attrs, name, value) {
   var html = '<input type="' + type + '" ' +
       attrs +
-      '" name="' + name +
+      ' name="' + name +
       '" value="' + value + '">';
   return html;
 }
@@ -165,14 +145,28 @@ function mkTodos(todoList) {
   return html;
 }
 
+function handleUpdateItem() {
+  alert("Update: " + this.responseText);
+  var res = JSON.parse(this.responseText);
+  updateTodo(res.id, res.done, res.descr);
+}
+
+function handleDeleteItem() {
+  alert(this.responseText);
+  var res = JSON.parse(this.responseText);
+  removeTodoItem(res.eltid);
+}
+
 var todoDiv = document.getElementById("todoDiv");
 todoDiv.innerHTML = mkTodos(todos);
 
 function todoClickHandler(evt) {
   if (evt.target.nodeName === 'INPUT' && evt.target.type === 'checkbox') {
-    updateTodoDone(evt.target.dataset.id, evt.target.checked);
+    updateTodoItemDone(localStorage.userid, evt.target.dataset.id,
+                       evt.target.checked, handleUpdateItem);
   } else if (evt.target.nodeName === 'BUTTON') {
-    removeTodoItem(evt.target.dataset.id);
+    alert("delete");
+    deleteTodoItem(localStorage.userid, evt.target.dataset.id, handleDeleteItem);
   }
 }
 
@@ -234,22 +228,21 @@ renderTodos = function (todoList) {
   todoDiv.innerHTML = mkTodos(selectedItems(todoList));
 };
 
-initList();
-
 function handleUserList() {
   alert("list from server: " + this.responseText);
   var data = JSON.parse(this.responseText);
   var userid = data.userid;
   todos = [];
+  renderTodos(todos);
   data.todos.forEach(function (elt) {
-    createTodo(elt._id, elt.done, elt.description);
+    addTodo(elt._id, elt.done, elt.description);
   });
 }
 
 function loginResponseHandler() {
   var resp = JSON.parse(this.responseText);
   alert("user OK: " + this.responseText);
-  if (resp.username !== null) {
+  if (resp.username !== "") {
     localStorage.username = resp.username;
     localStorage.userid = resp.userid;
     getServerList(resp.userid, handleUserList);
@@ -259,7 +252,7 @@ function loginResponseHandler() {
 function loginHandler(evt) {
   var username = evt.target.username.value;
   var passwd = evt.target.passwd.value;
-  alert("username: " + username + " password: " + passwd);
+  // alert("username: " + username + " password: " + passwd);
   getUser(username, passwd, loginResponseHandler);
   return false; // prevent further form action
 }
@@ -269,9 +262,13 @@ var loginElt = document.getElementById("loginElt");
 loginElt.onsubmit = loginHandler;
 
 function checkUser() {
-  if (localStorage.username === null) {
+  if (localStorage.userid === null || localStorage.userid === undefined ||
+      localStorage.userid === "") {
     loginElt.style.display = "block";
+    todos = [];
+    renderTodos(todos);
   } else {
+    getServerList(localStorage.userid, handleUserList);
     // loginElt.style.display = "none";
   }
 }

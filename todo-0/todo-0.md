@@ -178,9 +178,17 @@ Voor het aanmaken van een nieuw item op de server moeten we de verschillende soo
 
 De interface-conventie van booleans in formulieren is: aanwezigheid vs. afwezigheid, dus niet de waarde van de boolean. Dit hoeven we niet over te nemen in de AJAX-versie, maar dan moeten we de code wel aanpassen. (Dit ging mis bij het aanmaken van een nieuw item.)
 
-Bij het aanmaken (en veranderen) van een nieuw element moeten we de waarde in localStorage ook aanpassen. Deze is nu niet in overeenstemming met de server-waarde (na "create").
+Bij het aanmaken (en veranderen) van een nieuw element moeten we de waarde in localStorage ook aanpassen. Deze is nu niet in overeenstemming met de server-waarde (na "create"). Voorstel: in eerste instantie zonder localStorage, in tweede instantie localStorage met synchronisatie-voorzieningen. (Die synchromisatie lijkt mij nog een uitdaging.)
+
+Ook als je de todo-lijst leegmaakt (bij het opvragen van een gebruikers-lijst) moet je deze renderen: anders blijft de vorige waarde bewaard (in de DOM).
 
 De representatie van de todo-items in het JSON-interface is niet consistent; vgl. de list (GET) vs. een enkel element bij create (POST) - beide "UserTodoList".
+
+Bij een reeks asynchrone acties moet je soms informatie doorgeven van de ene actie naar de volgende. Dit kan niet op een normale manier, omdat de acties gekoppeld zijn aan systeem-events: de aanroep van de betreffende handlers heb je niet in de hand (en daarmee bijv. niet de parameters die je wilt doorgeven). Een (voorlopige) oplossing is om deze informatie door te geven via de server(!?!).
+
+> Als ik mij goed herinner is er in het geval van promises een voorziening om dergelijke informatie via functieresultaten door te geven. Nagaan...
+
+In principe moeten de operaties op de todo-elementen zowel via de totale todo-collection uitgevoerd kunnen worden, als via de user-collection: de identificatie is globaal. (Vgl. ook het Trello-API.)
 
 ### Stappen
 
@@ -188,6 +196,6 @@ De representatie van de todo-items in het JSON-interface is niet consistent; vgl
 * [ ] Inloggen van gebruiker, sessie-administratie via AJAX
 * [x] Opvragen (read) van de todo-list van de gebruiker via AJAX
 * [x] Creatie (create) van een todo-item via AJAX
-* [ ] Aanpassen (update) van een todo-item via AJAX
-* [ ] Verwijderen (delete) van een todo-item via AJAX
+* [x] Aanpassen (update) van een todo-item via AJAX
+* [x] Verwijderen (delete) van een todo-item via AJAX
 * [ ] Aanmelden/toevoegen van een nieuwe gebruiker via AJAX

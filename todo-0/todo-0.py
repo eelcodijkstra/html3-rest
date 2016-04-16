@@ -122,13 +122,20 @@ class UserTodoElement:
 
     def POST(self, userid, eltid):
         data = web.input()
+        done = "done" in data.keys()
         db.todos.update_one(
             {"_id": ObjectId(eltid)},
             {"$set": {"description": data.descr,
-                      "done": "done" in data.keys(),
+                      "done": done,
                       "userid": userid}}
         )
-        raise web.seeother("/users/" + userid + "/todos")
+        web.header('Content-Type', 'application/json')
+        return json.dumps({"id": eltid, "done": done, "descr": data.descr})
+
+    def DELETE(self, userid, eltid):
+        res = db.todos.delete_one({"_id": ObjectId(eltid)})
+        web.header('Content-Type', 'application/json')
+        return json.dumps({"eltid": eltid, "deletedCount": res.deleted_count})
 
 class UserTodoList:
     def GET(self, userid):
