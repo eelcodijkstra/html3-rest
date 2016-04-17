@@ -190,6 +190,8 @@ Bij een reeks asynchrone acties moet je soms informatie doorgeven van de ene act
 
 In principe moeten de operaties op de todo-elementen zowel via de totale todo-collection uitgevoerd kunnen worden, als via de user-collection: de identificatie is globaal. (Vgl. ook het Trello-API.)
 
+We moeten nog een bruikbare vorm van *testen* hebben, om elke stap in het proces uit te testen en te demonstreren.
+
 ### Stappen
 
 * [x] Uitproberen van AJAX, in browser (JS; asynchroon) en server (JSON resultaat).
