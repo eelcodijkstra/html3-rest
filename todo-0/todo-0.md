@@ -192,6 +192,8 @@ In principe moeten de operaties op de todo-elementen zowel via de totale todo-co
 
 We moeten nog een bruikbare vorm van *testen* hebben, om elke stap in het proces uit te testen en te demonstreren.
 
+JavaScript-opmerking: `xxx === undefined` levert een runtime error op: `reference error: xxx is not defined`. Maar `localStorage.xxx === undefined` levert wel een resultaat - meestal `true`.
+
 ### Stappen
 
 * [x] Uitproberen van AJAX, in browser (JS; asynchroon) en server (JSON resultaat).
