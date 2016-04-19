@@ -1,4 +1,4 @@
-/*global document, alert, localStorage, FormData, XMLHttpRequest, jQuery
+/*global document, alert, localStorage, FormData, XMLHttpRequest, jQuery, $
 */
 
 // model of todo-element and todo-list
@@ -178,24 +178,20 @@ function doneItems(todoList) {
 
 var selectedItems = allItems;
 
-var selectAllButton = document.getElementById("selectAllButton");
-var selectDoneButton = document.getElementById("selectDoneButton");
-var selectOpenButton = document.getElementById("selectOpenButton");
-
-selectAllButton.onclick = function () {
+$("#selectAllButton").on("click", function () {
   selectedItems = allItems;
   renderTodos(todos);
-};
+});
 
-selectDoneButton.onclick = function () {
+$("#selectDoneButton").on("click", function () {
   selectedItems = doneItems;
   renderTodos(todos);
-};
+});
 
-selectOpenButton.onclick = function () {
+$("#selectOpenButton").on("onclick", function () {
   selectedItems = openItems;
   renderTodos(todos);
-};
+});
 
 renderTodos = function (todoList) {
   todoDiv.innerHTML = mkTodos(selectedItems(todoList));
