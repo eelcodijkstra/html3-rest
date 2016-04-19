@@ -1,4 +1,4 @@
-/*global document, alert, localStorage, FormData, XMLHttpRequest
+/*global document, alert, localStorage, FormData, XMLHttpRequest, jQuery
 */
 
 // model of todo-element and todo-list
@@ -46,63 +46,39 @@ function removeTodoItem(id) {
 // server
 
 function getUser(username, passwd, cont) {
-  var data = new FormData();
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username + "&password=" + passwd);
-  req.send();
+  jQuery.getJSON("users", {username: username, password: passwd}, cont);
 }
 
-function createUser(username, password, cont) {
-  var data = new FormData();
-  data.append("username", username);
-  data.append("password", "geheim");
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username + "&password=" + "geheim");
-  req.send(data);
+function createUser(username, passwd, cont) {
+  jQuery.post("users", {username: username, password: passwd}, cont, "json");
 }
 
 function getLogin(username, passwd, cont) {
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", cont);
-  req.open("GET", "login?" + "username=" + username + "&password=" + passwd);
-  req.send();
+  jQuery.getJSON("login", {username: username, password: passwd}, cont);
 }
 
 function getServerList(userid, cont) {
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", cont);
-  req.open("GET", "users/" + userid + "/todos");
-  req.send();
+  jQuery.getJSON("users/" + userid + "/todos", cont);
 }
 
 function createTodoItem(userid, text, cont) {
-  var data = new FormData();
-  var req = new XMLHttpRequest();
-  data.append("descr", text);
-  req.addEventListener("load", cont);
-  req.open("POST", "users/" + userid + "/todos");
-  req.send(data);
+  jQuery.post("users/" + userid + "/todos", {descr: text}, cont);
 }
 
 function deleteTodoItem(userid, eltid, cont) {
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", cont);
-  req.open("DELETE", "users/" + userid + "/todos/" + eltid);
-  req.send()
+  jQuery.ajax({
+    url: "users/" + userid + "/todos/" + eltid,
+    method: "DELETE",
+    success: cont
+  });
 }
 
 function updateTodoItem(userid, eltid, done, text, cont) {
-  var data = new FormData();
-  var req = new XMLHttpRequest();
-  data.append("descr", text);
+  var data = {descr: text};
   if (done) {
-    data.append("done", done);
+    data.done = done;
   }
-  req.addEventListener("load", cont);
-  req.open("POST", "users/" + userid + "/todos/" + eltid);
-  req.send(data)
+  jQuery.post("users/" + userid + "/todos/" + eltid, data, cont, "json");
 }
 
 function updateTodoItemDone(userid, eltid, done, cont) {
@@ -145,15 +121,13 @@ function mkTodos(todoList) {
   return html;
 }
 
-function handleUpdateItem() {
-  alert("Update: " + this.responseText);
-  var res = JSON.parse(this.responseText);
+function handleUpdateItem(res) {
+  alert("Update: " + JSON.stringify(res));
   updateTodo(res.id, res.done, res.descr);
 }
 
-function handleDeleteItem() {
-  alert(this.responseText);
-  var res = JSON.parse(this.responseText);
+function handleDeleteItem(res) {
+  alert("deleted: " + JSON.stringify(res));
   removeTodoItem(res.eltid);
 }
 
@@ -174,8 +148,7 @@ todoDiv.onclick = todoClickHandler;
 
 var createItemInput = document.getElementById("createItemInput");
 
-function handleCreatedItem() {
-  var item = JSON.parse(this.responseText);
+function handleCreatedItem(item) {
   addTodo(item.id, item.done, item.descr);
 }
 
@@ -228,9 +201,8 @@ renderTodos = function (todoList) {
   todoDiv.innerHTML = mkTodos(selectedItems(todoList));
 };
 
-function handleUserList() {
-  alert("list from server: " + this.responseText);
-  var data = JSON.parse(this.responseText);
+function handleUserList(data) {
+  alert("list from server: " + JSON.stringify(data));
   var userid = data.userid;
   todos = [];
   renderTodos(todos);
@@ -239,13 +211,12 @@ function handleUserList() {
   });
 }
 
-function loginResponseHandler() {
-  var resp = JSON.parse(this.responseText);
-  alert("user OK: " + this.responseText);
-  if (resp.username !== "") {
-    localStorage.username = resp.username;
-    localStorage.userid = resp.userid;
-    getServerList(resp.userid, handleUserList);
+function loginResponseHandler(data) {
+  alert("user OK: " + JSON.stringify(data));
+  if (data.username !== "") {
+    localStorage.username = data.username;
+    localStorage.userid = data.userid;
+    getServerList(data.userid, handleUserList);
   }
 }
 
