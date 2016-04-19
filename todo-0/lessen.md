@@ -146,4 +146,15 @@ Er zijn ook hulpmiddelen voor het ontwerpen van een dergelijk API.
 
 Voor het testen van een dergelijke API zijn ook de nodige hulpmiddelen beschikbaar. (Je kunt een REST-API niet testen vanuit het URL-venster van de browser, omdat dit alleen GET-verzoeken kan genereren.)
 
+Je kunt in een web-app gebruik maken van de APIs van je eigen server, maar ook van de APIs van andere diensten. Dit kan vanuit de client (browser), via AJAX; het kan ook vanuit de server. Bij het gebruik van APIs vanuit de browser heb je te maken met extra security-problemen zoals "cross site scripting" (XSS). De browsers controleren daarop, en staan (tegenwoordig) alleen cross-site verzoeken toe die aan de CORS-regels voldoen. (CORS: Cross Origin Resource Sharing, zie bijv. [Wikipedia-CORS](https://en.wikipedia.org/wiki/Cross-origin_resource_sharing)).
+
+### Andere onderwerpen
+
+* gebruik van functies voor het representeren van de state (voorbeeld: selectiefuncties). Dit is ook een voorbeeld van het gebruik van functies voor het uitstellen van bewerkingen.
+* verschillende representaties van het model: in de server (Python; MongoDB - niet noodzakelijk gelijk); in de API (JSON, parameters); in de client (JS, JSON - localStorage). We moeten rekening houden met de eisen van de verschillende omgevingen, bijvoorbeeld voor de representatie van getallen, id's en booleans; en we moeten deze verschillende representaties op de geschikte plaatsen omzetten.
+* controleren van invoer van de gebruiker (valideren, en eventueel filteren i.v.m. security).
+* gebruik van `data` attribuut in HTML/DOM. Wij gebruiken dit vooral voor het koppelen van een html-element aan het betreffende model-element.
+* gebruik van APIs van derden; vanuit de browser; en vanuit de server.
+* CORS, bij het gebruik van APIs van derden vanuit de browser. (NB: dit kan ook van belang zijn voor de server, als je je diensten aan andere web-apps wilt aanbieden.)
+* begrip "architectuur", als de manier waarop de verschillende onderdelen samenhangen - zowel in een systeem als in een "ecosysteem". (Een systeem heeft een enkele eigenaar/verantwoordelijke; in een ecosysteem heb je met heel veel verschillende partners te maken - die zich niet noodzakelijk altijd netjes gedragen.)
 
