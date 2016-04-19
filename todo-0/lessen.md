@@ -157,4 +157,14 @@ Je kunt in een web-app gebruik maken van de APIs van je eigen server, maar ook v
 * gebruik van APIs van derden; vanuit de browser; en vanuit de server.
 * CORS, bij het gebruik van APIs van derden vanuit de browser. (NB: dit kan ook van belang zijn voor de server, als je je diensten aan andere web-apps wilt aanbieden.)
 * begrip "architectuur", als de manier waarop de verschillende onderdelen samenhangen - zowel in een systeem als in een "ecosysteem". (Een systeem heeft een enkele eigenaar/verantwoordelijke; in een ecosysteem heb je met heel veel verschillende partners te maken - die zich niet noodzakelijk altijd netjes gedragen.)
+* testen van de verschillende onderdelen: testen (en test-driven development) is al een lastig thema voor beginners; dit wordt niet eenvoudiger in een client-server situatie, waarin bovendien er niet altijd sprake is van een sterke koppeling tussen de client en de server. Daarnaast hebben we ook nog te maken met het database-interface.
+* reactive systems. (Zie bijvoorbeeld: https://en.wikipedia.org/wiki/Reactive_system.) Wat is het verschil met het asynchrone patroon dat we eerder beschreven hebben bij AJAX?
+    * hoe kun je een reactive dienst aanbieden - die gebruik maakt van services elders? Je moet dan ook op het niveau van de service met een continuation werken?
+    * asynchrone communicatie is een voorbeeld van *decoupling* - n.l. wat de tijd (volgorde?) betreft.
+    * hoe zit dat met *promises* van services die andere services gebruiken? Moet je die andere service buiten de promise laten?
 
+#### Verschillende representaties
+
+* in JSON is de representatie van booleans: `true` en `false`, zonder string-quotes. Er is dus een verschil tussen de boolean waarde `true` en de string-waarde `"true"`.
+* in de parameters van een HTTP-request (GET of POST) kun je alleen maar string-waardes opnemen, net zoals in een HTML-formulier (value="true"). Je kunt hierin geen verschil maken tussen boolean waarden en strings.
+* een checkbox kun je zien als de representatie van een boolean waarde. Deze waarde wordt in HTML (c.q. DOM) weergegeven als de *aanwezigheid* of *afwezigheid* van het attribuut `checked`, waarbij de waarde van dit attribuut niet van belang is. Bij de overgang van en naar deze HTML-representatie moeten we zorgen voor de juiste vorm (representatie).
