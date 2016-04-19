@@ -168,3 +168,7 @@ Je kunt in een web-app gebruik maken van de APIs van je eigen server, maar ook v
 * in JSON is de representatie van booleans: `true` en `false`, zonder string-quotes. Er is dus een verschil tussen de boolean waarde `true` en de string-waarde `"true"`.
 * in de parameters van een HTTP-request (GET of POST) kun je alleen maar string-waardes opnemen, net zoals in een HTML-formulier (value="true"). Je kunt hierin geen verschil maken tussen boolean waarden en strings.
 * een checkbox kun je zien als de representatie van een boolean waarde. Deze waarde wordt in HTML (c.q. DOM) weergegeven als de *aanwezigheid* of *afwezigheid* van het attribuut `checked`, waarbij de waarde van dit attribuut niet van belang is. Bij de overgang van en naar deze HTML-representatie moeten we zorgen voor de juiste vorm (representatie).
+
+## Microservices
+
+Je kunt in een toepassing meerdere API's gebruiken, van verschillende servers. 
