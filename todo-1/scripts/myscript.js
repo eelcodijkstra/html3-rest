@@ -26,16 +26,6 @@ function updateTodo(id, done, text) {
   renderTodos(todos);
 }
 
-function updateTodoDone(id, done) {
-  todoElt(id).done = done;
-  renderTodos(todos);
-}
-
-function updateTodoText(id, text) {
-  todoElt(id).text = text;
-  renderTodos(todos);
-}
-
 function removeTodoItem(id) {
   todos = todos.filter(function (item) {
     return item.id !== id;

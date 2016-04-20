@@ -28,3 +28,10 @@ jQuery biedt ook mogelijkheden om HTML-code aan te maken. Ik moet er echt mee ex
     * dit levert consistentie-winst op, onder andere bij booleans (checkbox)
     * hoe werkt dit bij meervoudige keuzes?
 *
+
+### Event handlers: data
+
+Je kunt in jQuery bij het koppelen (binding) van een handler aan een event(klasse) "data" meegeven die bij de actuele afhandeling beschikbaar is in het event-object dat aan de handler meegegeven wordt.
+
+> Als dit een string is moet je een extra parameter (voor de selector) meegeven.
+
