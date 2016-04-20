@@ -20,7 +20,7 @@ Voor de jQuery kunnen we gebruik maken van `$(elt).val()` - ook voor een checkbo
 
 jQuery biedt ook mogelijkheden om HTML-code aan te maken. Ik moet er echt mee experimenteren om te zien hoeveel eenvoudiger dat kan worden.
 
-> Heeft jQuery ook mogelijkheden voor het manipuleren van de DOM, zonder het HTML-pad?
+> Heeft jQuery ook mogelijkheden voor het manipuleren van de DOM, zonder het HTML-pad? Door middel van de jQuery-functie kun je ook DOM-elementen aanmaken; daarnaast zijn er functies om deze in te voegen in de DOM.
 
 ### Attributen, properties en values
 
@@ -34,4 +34,17 @@ jQuery biedt ook mogelijkheden om HTML-code aan te maken. Ik moet er echt mee ex
 Je kunt in jQuery bij het koppelen (binding) van een handler aan een event(klasse) "data" meegeven die bij de actuele afhandeling beschikbaar is in het event-object dat aan de handler meegegeven wordt.
 
 > Als dit een string is moet je een extra parameter (voor de selector) meegeven.
+
+### jQuery function
+
+* een jQuery function aanroep kun je op twee manieren schrijven: `jQuery()` en `$()`.
+* je kunt deze functie gebruiken voor (i) het selecteren van elementen in de DOM; (ii) het aanmaken van nieuwe elementen in de DOM.
+
+### chaining 
+
+Een belangrijke jQuery-constructie is de *chaining*: het resultaat van een jQuery-functie is een jQuery-element, waarop je weer dezelfde functies kunt loslaten. Je komt dan vaak constructies tegen van de vorm:
+
+`$(selector).function1(args1).function2(args2).function3(args3)`
+
+Dit voorkomt dat je dezelfde selector steeds opnieuw moet gebruiken.
 
