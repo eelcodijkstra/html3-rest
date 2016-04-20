@@ -122,7 +122,7 @@ class UserTodoElement:
 
     def POST(self, userid, eltid):
         data = web.input()
-        done = "done" in data.keys()
+        done = "done" in data.keys() and data["done"] == "true"
         db.todos.update_one(
             {"_id": ObjectId(eltid)},
             {"$set": {"description": data.descr,
@@ -149,7 +149,7 @@ class UserTodoList:
 
     def POST(self, userid):
         data = web.input()
-        done = "done" in data.keys()
+        done = "done" in data.keys() and data["done"] == "true"
         id = db.todos.insert_one({"description": data.descr,
                                   "done": done,
                                   "userid": userid}).inserted_id
