@@ -8,7 +8,7 @@ function handleAjaxResponse() {
   alert(this.responseText);
 }
 
-function handleGet(cont) {
+function handleGet() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
   var req = new XMLHttpRequest();
@@ -19,7 +19,7 @@ function handleGet(cont) {
 
  document.getElementById("getButton").onclick = handleGet;
 
-function handlePost(cont) {
+function handlePost() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
   var req = new XMLHttpRequest();
@@ -31,7 +31,7 @@ function handlePost(cont) {
 
 document.getElementById("postButton").onclick = handlePost;
 
-function handlePut(cont) {
+function handlePut() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
   var req = new XMLHttpRequest();
@@ -43,7 +43,7 @@ function handlePut(cont) {
 
 document.getElementById("putButton").onclick = handlePut;
 
-function handleDelete(cont) {
+function handleDelete() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
   var req = new XMLHttpRequest();
