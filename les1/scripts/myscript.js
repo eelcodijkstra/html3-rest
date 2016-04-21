@@ -5,7 +5,7 @@ var par1Input = document.getElementById("par1Input");
 var par2Input = document.getElementById("par2Input");
 
 function handleAjaxResponse() {
-  alert(this.responseText);
+  alert(this.responseText + " resultaatcode: " + this.status );
 }
 
 function handleGet() {
@@ -32,13 +32,13 @@ function handlePost() {
 document.getElementById("postButton").onclick = handlePost;
 
 function handlePut() {
-  var par1 = par1Input.value;
-  var par2 = par2Input.value;
+  var data = new FormData();
+  data.append("par1", par1Input.value);
+  data.append("par2", par2Input.value);
   var req = new XMLHttpRequest();
   req.addEventListener("load", handleAjaxResponse);
   req.open("PUT", "echo");
-  req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  req.send("par1=" + par1 + "&par2=" + par2);
+  req.send(data);
 }
 
 document.getElementById("putButton").onclick = handlePut;

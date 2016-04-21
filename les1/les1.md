@@ -97,9 +97,26 @@ Voor het afhandelen van de respons gebruiken we de volgende functie:
 
 ```js
 function handleAjaxResponse() {
-  alert(this.responseText);
+  alert(this.responseText + " resultaatcode: " + this.status);
 }
 ```
+
+Deze functie wordt aangeroepen als de http-respons compleet geladen is in de browser (`load` event). De resultaatcode is 200 voor "OK", en bijvoorbeeld 404 voor "Not found".
+
+
+> Suggestie: probeer dit uit, door de URL in het AJAX-request te veranderen in een URL die de server niet ken, bijvoorbeeld "echo123".
+
+> Je kunt ook tussen het versturen en het compleet laden bijhouden hoe ver de respons van de server gevorderd is. Bovendien kun je handlers meegeven voor de situatie dat er iets misgegaan is.
+
+> De "load" event beteket dat de respons vanuit de server goed aangekomen is. Als er iets misgaat, treedt er een andere event op (bijv. "error" of "timeout"). er een andere event geacti dat de transfer vanuit de server goed gegaan is? We moeten waarschijnlijk wel controleren op de HTTP resultaatcode (bijv. 200 of 404).
+
+Bij een POST-request gebruiken we een iets andere aanpak:
+
+* de data (parameters) bij een POST kunnen omvangrijk zijn, daarom versturen we deze niet als onderdeel van de URL, maar als *inhoud* van het request; (dit is ook het geval bij het versturen van een formulier via POST).
+* we kunnen deze data op verschillende manieren coderen; we geven de gebruikte codering aan in de request-header `Content-Type`. De gebruikelijke codering bij formulieren is: `application/x-www-form-urlencoded`.
+    * een andere vorm van codering is: We gebruiken dan het FormData-object. Hiervan geven we een voorbeeld bij het PUT-request.
+* we geven deze data mee als parameter van de `send`-aanroep.
+
 
 Suggestie:
 
