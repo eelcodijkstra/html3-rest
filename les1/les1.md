@@ -117,13 +117,37 @@ Bij een POST-request gebruiken we een iets andere aanpak:
     * een andere vorm van codering is: We gebruiken dan het FormData-object. Hiervan geven we een voorbeeld bij het PUT-request.
 * we geven deze data mee als parameter van de `send`-aanroep.
 
+```js
+function handlePost() {
+  var par1 = par1Input.value;
+  var par2 = par2Input.value;
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", handleAjaxResponse);
+  req.open("POST", "echo");
+  req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  req.send("par1=" + par1 + "&par2=" + par2);
+}
+```
+
+Zoals gezegd kunnen we de data ook via FormData meegeven. Dit hebben we uitgewerkt voor het PUT-request. We kunnen deze vorm ook gebruiken voor POST. De Content-Type header wordt in dit geval automatisch ingevuld, met als waarde: `multipart/form-data` met een speciale *boundary* (scheidingsstring tussen de verschillende delen).
+
+```js
+function handlePut() {
+  var data = new FormData();
+  data.append("par1", par1Input.value);
+  data.append("par2", par2Input.value);
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", handleAjaxResponse);
+  req.open("PUT", "echo");
+  req.send(data);
+}
+```
+
+> Kunnen we de foutsituatie uittesten, bijvoorbeeld door een niet-bestaande server te adresseren?
 
 Suggestie:
 
-* voor elke aanvraag een button en een uitvoer-veld;
-* eventueel een invoer-veld waarin de gebruiker een invoerwaarde kan opgeven.
 * demonstreren van de noodzaak van URL-encoding.
-* andere manieren om data (parameters) mee te geven, o.a. `FormData`.
 
 ### Parameters; URL encoding
 
@@ -141,6 +165,26 @@ Als je invoer-waarden afkomstig van een gebruiken als parameter-waarde gebruikt,
 
 Voorbeeld:
 
+
+### Asynchrone verwerking
+
+De `send` functie eindigt zodra het request verzonden is. Het resultaat van het request: de repsonse van de server, is *asynchroon* beschikbaar. De verwerking van het programma gaat verder na de `send`. Als het resultaat van de request: de response van de server, beschikbaar is, wordt handler voor de "load" event uitgevoerd.
+
+In de tijd tussen het versturen van het request en het beschikbaar zijn van het resultaat kan de processor vaak miljoenen instructies uitvoeren. Dit is één van de voordelen van de asynchrone benadering: in plaats van alleen maar te wachten op het resultaat, kan de processor nuttige dingen doen. Een ander voordeel is dat tijdens deze wachttijd de gebruiker interactie met het programma kan hebben: het is niet "doof" (zoals tijdens het verwerken van een formulier volgens de niet-AJAX aanpak).
+
+Voor opdrachten die mogelijk veel tijd vragen en waarvan het niet voorspelbaar is hoeveel tijd deze vragen, gebruik je bij voorkeur een dergelijke asynchrone aanpak. Voorbeelden hiervan zijn:
+
+* interacties met de gebruiker;
+* interacties met de server;
+* filesysteem - opdrachten;
+* database-queries
+
+> Er zijn nog andere manieren dan het gebruik van de continuation-functies - bijv. het gebruik van promises of futures (wat is het verschil?) Vgl. ook Google Dart.
+
+Soms heb je te maken met een "keten" van asynchrone opdrachten. Bijvoorbeeld: je doet een http-request naar de identificatie van een gebruiker (op grond van zijn naam), en aan de hand van het resultaat doe je een volgend http-request naar de data van die gebruiker. Je hebt dan een keten met twee asynchrone opdrachten. Als je deze beschrijft in de vorm van handlers (of continuation functions) blijkt dit verloop niet zo duidelijk uit de programmatekst.
+
+
+
 ### Volgende lessen:
 
 * REST interfaces (server)
@@ -155,8 +199,6 @@ speciale constructies:
 
 * event-handlers
 * continuation functions
-* promises
+* promises (en reeksen van asynchrone opdrachten)
 * asynchroons programmeren - vgl. ook database-queries in de browser
-
-
-
+* DART: wait
