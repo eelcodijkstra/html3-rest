@@ -59,7 +59,7 @@ function createUser(username, password, cont) {
   data.append("password", "geheim");
   var req = new XMLHttpRequest();
   req.addEventListener("load", cont);
-  req.open("GET", "users?" + "username=" + username + "&password=" + "geheim");
+  req.open("POST", "users?" + "username=" + username + "&password=" + "geheim");
   req.send(data);
 }
 
