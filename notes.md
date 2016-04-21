@@ -62,3 +62,6 @@ Maakt het uit op welke manier je een workspace maakt vanuit een GitHub repo? Via
 
 (Als je als URL de ssh/git-URL gebruikt hebt, dan kun je de git push-opdracht gebruiken zonder dat er steeds om een wachtwoord gevraagd wordt. Als je de https-URL gebruikt hebt, dan wordt steeds om je wachtwoord gevraagd.)
 
+### header voor ajax POST requests
+
+Volgens de documentatie op MDN is het url-encoded type default - maar dat blijkt in mijn geval niet zo te zijn: daar is het text-type default. Dat wordt door web.py niet herkend als input-parameters (web.input).

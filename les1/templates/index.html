@@ -1,32 +1,27 @@
-$def with (username, userid)
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Todo-1</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <title>AJAX Les-1</title>
   </head>
   <body>
-    <h1>Todo</h1>
+    <h1>Les 1: AJAX</h1>
 
-    <div id=todoDiv data-user=$username data-userid=$userid>
+    <div>
+      AJAX HTTP echo request:<br>
+      par1: <input id="par1Input" type="text" name="par1" value=""><br>
+      par2: <input id="par2Input" type="text" name="par2" value=""><br>
+      send: <button id="getButton">GET</button>
+           <button id="postButton">POST</button>
+           <button id="putButton">PUT</button>
+           <button id="deleteButton">DELETE</button>
     </div>
     <hr>
-    <div>
-      Create new item:
-      <input id="createItemInput" type="text" name="text" value=""
-             placeholder="what needs to be done?"><br>
-    </div>
-    <button id="selectAllButton">Select all</button>
-    <button id="selectOpenButton">Select open</button>
-    <button id="selectDoneButton">Select done</button>
-    <hr>
-    <div>
-      <form id="loginElt">
-        Username: <input type="text" name="username" value="">
-        Password: <input type="password" name="passwd" value="">
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <form method="POST" action="echo">
+      Form HTTP echo request:<br>
+      par1: <input type="text" name="par1" value=""><br>
+      par2: <input type="text" name="par2" value=""><br>
+      send: <button type="submit">POST</button>
+    </form>
     <script src="scripts/myscript.js"></script>
   </body>
 </html>
