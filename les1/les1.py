@@ -36,13 +36,6 @@ class Echo:
         web.header('Content-Type', 'application/json')
         return json.dumps(web.input())
 
-def startSession(userid):
-    sessionid = db.sessions.insert_one({
-            "userid": userid,
-            "startTime": int(time.time()) # secs since Epoch
-        }).inserted_id
-    return sessionid
-
 class Script:
     def GET(self, file):
         try:
