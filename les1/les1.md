@@ -183,6 +183,11 @@ Voor opdrachten die mogelijk veel tijd vragen en waarvan het niet voorspelbaar i
 
 Soms heb je te maken met een "keten" van asynchrone opdrachten. Bijvoorbeeld: je doet een http-request naar de identificatie van een gebruiker (op grond van zijn naam), en aan de hand van het resultaat doe je een volgend http-request naar de data van die gebruiker. Je hebt dan een keten met twee asynchrone opdrachten. Als je deze beschrijft in de vorm van handlers (of continuation functions) blijkt dit verloop niet zo duidelijk uit de programmatekst.
 
+#### Oefeningen
+
+* maak een keten van asynchrone opdrachten: (i) 
+
+(Een dergelijke keten heeft soms zin als het om een enkele server gaat, hoewel je de combinatie van opdrachten dan misschien liever bij de server zelf doet. Maar als het gaat om verschillende servers kun je dit niet "kortsluiten" bij de server.)
 
 
 ### Volgende lessen:
@@ -193,6 +198,7 @@ Soms heb je te maken met een "keten" van asynchrone opdrachten. Bijvoorbeeld: je
 * jQuery (voor AJAX; DOM; ...)
 * de todo-toepassing in AJAX met jQuery
 * afhandeling van statische resources (in Python)?
+    * of is dit al eerder aan de orde geweest?
 * JSON/BSON? (of is dat voorkennis? herhaling?)
 
 speciale constructies:

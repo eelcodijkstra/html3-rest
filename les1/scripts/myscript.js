@@ -5,7 +5,7 @@ var par1Input = document.getElementById("par1Input");
 var par2Input = document.getElementById("par2Input");
 
 function handleAjaxResponse() {
-  alert(this.responseText + " resultaatcode: " + this.status );
+  alert(this.responseText + " resultaatcode: " + this.status);
 }
 
 function handleGet() {
@@ -17,7 +17,7 @@ function handleGet() {
   req.send();
 }
 
- document.getElementById("getButton").onclick = handleGet;
+document.getElementById("getButton").onclick = handleGet;
 
 function handlePost() {
   var par1 = par1Input.value;
