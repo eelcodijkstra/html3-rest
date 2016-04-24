@@ -56,6 +56,21 @@ We kunnen deze API testen met behulp van de browser-hulpmiddelen of met speciale
 
 In de server is er vaak een direct verband tussen een REST-functie en een database-operatie.
 
+## Omgaan met fouten
+
+Een REST-operatie is niet altijd succesvol. Naast de "normale" fouten zoals een niet-bestaande URL, kun je ook opdrachten proberen uit te voeren die niet toegestaan zijn, of die geen betekenis hebben (gegevens de huidige toestand van de server of de database).
+
+Gesuggereerde aanpak:
+
+* gebruik http-codes om aan te geven of de operatie geslaagd is of niet;
+    * 200: OK
+    * 400-serie: fout in het gebruik van de API
+    * 500: server error
+* geef in het geval van fouten voldoende informatie om uit te zoeken wat er aan de hand is, en wat er aan gedaan kan worden.
+
+
+* zie: http://apigee.com/about/blog/technology/restful-api-design-what-about-errors
+
 
 ## Opmerkingen
 
@@ -68,4 +83,12 @@ In Postman kun je we data versturen in JSON-formaat: `Content-Type: application/
 We kunnen het versturen (en verwerken) van JSON-input als een opdracht toevoegen, nadat we het gebruik van de "gewone" parameters geïllustreerd hebben.
 
 (Hoe zit dit bijvoorbeeld bij het verwerken van input door een andere Python web server? Door nodejs?)
+
+### CORS
+
+Vanuit de browser kun je niet zonder meer http-requests doen naar andere servers dan de "origin" van de website.
+
+Je kunt vanuit een andere toepassing, vanuit een andere server, of vanaf de commandoregel willekeurige http-requests doen: hier ben je niet gebonden aan de CORS-beperkingen.
+
+> Hierdoor is het mogelijk om toepassingen als *Postman* te maken. Maar dit kan niet een simpele web-app zijn: de verzoeken moeten of vanuit de server gedaan worden, of vanuit een niet-browser toepassing (bijvoorbeeld een Chrome Extension).
 
