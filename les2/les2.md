@@ -59,6 +59,13 @@ In de server is er vaak een direct verband tussen een REST-functie en een databa
 
 ## Opmerkingen
 
-De normale verwerking van de input (`web.input()`) accepteert kennelijk geen JSON-formaat.
+De normale verwerking van de input (`web.input()`) accepteert kennelijk geen JSON-formaat. Je kunt de JSON-data wel opvragen, met behulp van `web.data()`. Ik weet niet of er een manier is om de betreffende header met het Content-Type op te vragen. (Je kunt wel de header van de response zetten.)
+
+> Je kunt alle informatie over de request krijgen via het object `web.ctx.env`.
 
 In Postman kun je we data versturen in JSON-formaat: `Content-Type: application/json`.
+
+We kunnen het versturen (en verwerken) van JSON-input als een opdracht toevoegen, nadat we het gebruik van de "gewone" parameters geïllustreerd hebben.
+
+(Hoe zit dit bijvoorbeeld bij het verwerken van input door een andere Python web server? Door nodejs?)
+
