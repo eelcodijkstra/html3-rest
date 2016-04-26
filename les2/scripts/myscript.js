@@ -8,6 +8,10 @@ function handleAjaxResponse() {
   alert(this.responseText + " resultaatcode: " + this.status);
 }
 
+function handleErrorResponse() {
+  alert("Error: " + this.responseText + " resultaatcode: " + this.status);
+}
+
 function handleGet() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
@@ -53,3 +57,13 @@ function handleDelete() {
 }
 
 document.getElementById("deleteButton").onclick = handleDelete;
+
+function handleNotFoundButton() {
+  var req = new XMLHttpRequest();
+  req.addEventListener("load", handleAjaxResponse);
+  req.addEventListener("error", handleErrorResponse);
+  req.open("GET", "scripts/xxx.js");
+  req.send();
+}
+
+document.getElementById("notFoundButton").onclick = handleNotFoundButton;
