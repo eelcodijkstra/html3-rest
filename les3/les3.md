@@ -61,5 +61,8 @@ Voorlopige antwoorden:
 
 De "load" handler wordt aangeroepen ook in het geval van http-foutcodes. Je moet dan in deze handler controleren op de status van het resultaat.
 
+De beschrijving van jQuery `error` suggereert dat http-fouten ook door deze functie afgehandeld worden.
+
+
 
     

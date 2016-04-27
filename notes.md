@@ -65,3 +65,8 @@ Maakt het uit op welke manier je een workspace maakt vanuit een GitHub repo? Via
 ### header voor ajax POST requests
 
 Volgens de documentatie op MDN is het url-encoded type default - maar dat blijkt in mijn geval niet zo te zijn: daar is het text-type default. Dat wordt door web.py niet herkend als input-parameters (web.input).
+
+## Links
+
+* [NativeScript voorbeeld](https://www.nativescript.org/blog/nativescript-open-source-sample---tasks)
+
