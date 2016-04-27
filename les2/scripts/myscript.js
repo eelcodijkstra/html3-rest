@@ -62,7 +62,7 @@ function handleNotFoundButton() {
   var req = new XMLHttpRequest();
   req.addEventListener("load", handleAjaxResponse);
   req.addEventListener("error", handleErrorResponse);
-  req.open("GET", "scripts/xxx.js");
+  req.open("GET", "scripts/nothing.js");
   req.send();
 }
 
