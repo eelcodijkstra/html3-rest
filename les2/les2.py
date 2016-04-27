@@ -40,12 +40,10 @@ class Echo:
 
 class Script:
     def GET(self, file):
-        print("try...")
         try:
             f = open('scripts/' + file, 'r')
             return f.read()
         except:
-            print("not found...")
             web.header('Content-Type', 'application/json')
             raise web.notfound(json.dumps({"msg": "The script " + file  + " is not found"})) # you can send an 404 error here if you want
 

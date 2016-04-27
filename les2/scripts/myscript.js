@@ -5,7 +5,7 @@ var par1Input = document.getElementById("par1Input");
 var par2Input = document.getElementById("par2Input");
 
 function handleAjaxResponse() {
-  alert(this.responseText + " resultaatcode: " + this.status);
+  alert("OK: " + this.responseText + " resultaatcode: " + this.status);
 }
 
 function handleErrorResponse() {

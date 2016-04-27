@@ -53,3 +53,14 @@ function handleDelete() {
 }
 
 document.getElementById("deleteButton").onclick = handleDelete;
+
+$("#notFoundButton").on("click", function (evt) {
+  $.ajax({
+    url: "scripts/nothing.js",
+    method: "GET"
+  }).done(function (data, status, xhr) {
+    alert("OK: " + JSON.stringify(data) + " - status: " + status);
+  }).fail(function (xhr, status, error) {
+    alert("Error " + xhr.responseText + " - status: " + error + " " + xhr.status);
+  });
+});

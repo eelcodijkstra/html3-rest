@@ -23,7 +23,9 @@ class Script:
             f = open('scripts/' + file, 'r')
             return f.read()
         except:
-            return '404' # you can send an 404 error here if you want
+            web.header('Content-Type', 'application/json')
+            raise web.notfound(json.dumps({"msg": "File " + file + " not found"}))
+            # return '404' # you can send an 404 error here if you want
 
 class Style:
     def GET(self, file):
