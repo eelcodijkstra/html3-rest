@@ -1,49 +1,23 @@
-## Les 3: combineren van AJAX en REST
+## Les 3: jQuery
 
-In deze les laten we zien hoe je de AJAX- en REST-principes kunt combineren voor het maken van een eenvoudige toepassing: de todo-lijst.
+In de vorige lessen hebben we "puur" JavaScript gebruikt in de browser. Een veelgebruikte JavaScript-library is jQuery. Door het gebruik van jQuery kun je veel voorkomende constructies vaak veel korter en handiger noteren dan wanneer je "ouur" JavaScript gebruikt.
 
-We gebruiken twee verzamelingen (collections): gebruikers en todo-lijsten. Een gebruiker heeft 1 todo-lijst; via de gebruiker identificeer je de lijst. 
+In deze les introduceren we het gebruik van jQuery: we laten zien hoe de voorbeelden die we eerder gezien hebben, eenvoudiger genoteerd kunnen worden met behulp van jQuery.
 
-> Koppelen we deze lijst direct aan een gebruiker? Hebben we dan ook een vorm van authenticatie nodig?
+> Het gebruik van dergelijke libraries loopt vaak vooruit op nieuwe mogelijkheden in de browser en in JavaScript.
 
-> Hoe kunnen we het interface uitbreidbaar maken zodat we later meerdere todo-lijsten per gebruiker kunnen hebben?
+Aspecten die aan de orde komen:
 
-## jQuery
-
-Suggestie: in les 3 introduceren van jQuery, in les 4 de integratie van de verschillende onderdelen.
+* selectie van DOM-onderdelen
+* manipuleren van de DOM (o.a. in plaats van HTML)
+* AJAX
+* chaining in jQuery
+* Promises
+* chaining in Promises
 
 Eventueel kunnen we in een aparte les ook de opmaak introduceren, bijvoorbeeld met Bootstrap.
 
-## Gebruikers
-
-* een gebruiker heeft een unieke naam;
-* een gebruiker heeft een wachtwoord;
-* een gebruiker heeft een (of meer) todo-lijst;
-* een gebruiker heeft een unieke identificatie - deze wordt door het systeem toegewezen;
-
-## Todo-lijsten
-
-* een todo-lijst geeft een unieke identificatie - deze wordt door het systeem toegewezen;
-* een todo-lijst bestaat uit o of meer todo-items;
-
-
-* een todo-item heeft een unieke identificatie - deze wordt door het systeem toegewezen;
-* een todo-item bevat een onderwerp en een status ("done").
-    * beide kunnen veranderd worden (via de API).
-    
-## front-end architectuur
-
-We moeten een manier hebben om de verschillende aspecten van het front-end bijeen te brengen:
-
-* interactie met de gebruiker (input-elementen);
-* display van de todo-lijsten (enz);
-* interactie met de server (todo-lijsten, items, users);
-
-De architectuur legt vast (in de vorm van een patroon) hoe deze onderdelen samenhangen.
-
-We willen bij voorkeur een architectuur die uitbreidbaar is: als we met meerdere modellen te maken krijgen, moeten deze eenvoudig toegevoegd kunnen worden.
-
-Bij voorkeur gebruiken we een *compositie* van onderdelen: we kunnen een onderdeel toevoegen zonder dat we daarvoor andere onderdelen hoeven te veranderen. Bovendien kunnen we profitere van de combinatie van deze onderdelen, en niet alleen van de "optelsom".
+> Er is een aparte jQeury-library voor het user-interface. (Deze is wat minder populair dan bijv. Bootstrap?)
 
 ## Het signaleren en afhandelen van fouten
 
@@ -112,5 +86,14 @@ Er is een verschil tussen de events die je aan een UI-element koppelt, en de eve
 
 Met andere woorden: je wilt AJAX-events op een veel preciezere manier opvangen.
 
+De functies die je meegeeft aan `then` hebben 1 argument - en kunnen in principe ook een resultaat opleveren. Dit resultaat wordt dan het argument van de overeenkomstige functie in de volgende `then`. (Dit is iets subtieler: het resultaat van een functie als `then`-argument moet weer een promise zijn.)
 
-Het gebruik van promises maa
+NB: de AJAX-functies in jQuery zijn niet helemaal vergelijkbaar met Promises, zie o.a. http://www.html5rocks.com/en/tutorials/es6/promises/. De functies die je meegeeft hebben meer dan 1 argument - en lenen zich daardoor niet goed voor "chaining". Het is in zekere zin bijzonder dat jQuery, waar chaining zo'n grote rol speelt in de architectuur/principes, dit aspect niet in dezelfde geest opgelost heeft.
+
+> In de nieuwe versie van jQuery, 3.x (nu nog in Beta), zijn deze verschillen verdwenen: jQuery houdt zich aan de promises-A+ regels.
+
+* [HTML5 Rocks](http://www.html5rocks.com/en/tutorials/es6/promises/)
+* [MDN Promises](https://developer.mozilla.org/nl/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+* [promisesjs.org](https://www.promisejs.org/)
+* [Bluebird](http://bluebirdjs.com/docs/api-reference.html)
+* [vasanthk](http://www.vasanthk.com/jquery-promises-and-deferred-objects/)
