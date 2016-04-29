@@ -4,17 +4,22 @@
 var par1Input = document.getElementById("par1Input");
 var par2Input = document.getElementById("par2Input");
 
-function handleAjaxResponse() {
-  alert(this.responseText + " resultaatcode: " + this.status);
+function handleAjaxResponse(data, status, xhr) {
+  alert(xhr.responseText + " resultaatcode: " + this.status);
+}
+
+function handleAjaxError(xhr, status, error) {
+  alert(xhr.responseText + " resultaatcode: " + this.status);
 }
 
 function handleGet() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
   var req = new XMLHttpRequest();
-  req.addEventListener("load", handleAjaxResponse);
-  req.open("GET", "echo" + "?par1=" + par1 + "&par2=" + par2);
-  req.send();
+  $.ajax({method: "GET", url: "echo" + "?par1=" + par1 + "&par2=" + par2
+    })
+      .done(handleAjaxResponse)
+      .fail(handleAjaxError);
 }
 
 document.getElementById("getButton").onclick = handleGet;
@@ -53,6 +58,16 @@ function handleDelete() {
 }
 
 document.getElementById("deleteButton").onclick = handleDelete;
+
+$("#deleteButton").on("click", function (evt) {
+  var par1 = par1Input.value;
+  var par2 = par2Input.value;
+  $.ajax({
+    url: "echo" + "?par1=" + par1 + "&par2=" + par2,
+    method: "DELETE"
+  }).done(handleAjaxResponse)
+    .fail(handleAjaxError);
+});
 
 $("#notFoundButton").on("click", function (evt) {
   $.ajax({

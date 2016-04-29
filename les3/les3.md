@@ -55,6 +55,22 @@ $.ajax({
 
 ```
 
+Je kunt dit ook anders schrijven:
+
+```js
+var req = $.ajax({
+  url: "myurl",
+  method: "GET"
+});
+
+req.done(function (data, status, xhr) {
+});
+
+req.fail(function (xhr, status, errror) {
+});
+
+```
+
 NB: dit is nog niet de promise-versie; in dat geval schrijf je:
 
 ```
@@ -71,6 +87,8 @@ In dit geval zijn de functies *filters*: het functieresultaat is het resultaat v
 Een "probleem" in dit geval is dat deze constructie niet direct duidelijk is, in tegenstelling tot de notatie met de callbacks. Dit wordt dan een voorbeeld: zo moet je het schrijven, en dit betekent het... maar je hoeft niet te begrijpen hoe dit werkt... Zoiets vind ik in het algemeen minder bevredigend.
 
 De notatie met `.done` en `.fail` is nog enigszins uit te leggen: het resultaat van `.ajax` is een object waarvan je verschillende onderdelen kunt invullen, ook nadat dit object als resultaat van `.ajax` is opgeleverd.
+
+Opmerking: bij een normaal XHR-object moet je eerst de handlers invullen voordat je de `send` uitvoert: anders loop je het risico dat je het resultaat van de server verwerkt wordt voordat de handler aan het XHR-object gekoppeld is. In het geval van Promises bestaat dit risico niet: vandaar dat je deze notatie kunt gebruiken, waarbij de handlers achteraf aan het object gekoppeld worden.
 
 ## Promises
 
