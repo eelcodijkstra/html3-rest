@@ -4,6 +4,7 @@ import json
 
 urls = (
     '/','Index',
+    '/echo', 'Echo',
     '/login', 'Login',
     '/logout', 'Logout',
     '/users','Users',
@@ -38,6 +39,32 @@ class Style:
 class Index:
     def GET(self):
         return render.index()
+
+class Echo:
+    def GET(self):
+        web.header('Content-Type', 'application/json')
+        data = web.input()
+        data["method"] = "GET"
+        return json.dumps(data)
+
+    def POST(self):
+        web.header('Content-Type', 'application/json')
+        data = web.input()
+        data["json"] = json.loads(web.data())
+        data["contentType"] = web.ctx.env["CONTENT_TYPE"]
+        data["method"] = "POST"
+        return json.dumps(data)
+
+    def PUT(self):
+        web.header('Content-Type', 'application/json')
+        data = web.input()
+        data["method"] = "PUT"
+        return json.dumps(data)
+
+    def DELETE(self):
+        web.header('Content-Type', 'application/json')
+        return json.dumps(web.input())
+
 
 class Login:
     def GET(self):

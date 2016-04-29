@@ -5,17 +5,16 @@ var par1Input = document.getElementById("par1Input");
 var par2Input = document.getElementById("par2Input");
 
 function handleAjaxResponse(data, status, xhr) {
-  alert(xhr.responseText + " resultaatcode: " + this.status);
+  alert(xhr.responseText + " resultaatcode: " + status);
 }
 
 function handleAjaxError(xhr, status, error) {
-  alert(xhr.responseText + " resultaatcode: " + this.status);
+  alert(xhr.responseText + " resultaatcode: " + status);
 }
 
 function handleGet() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
-  var req = new XMLHttpRequest();
   $.ajax({method: "GET", url: "echo" + "?par1=" + par1 + "&par2=" + par2
     })
       .done(handleAjaxResponse)
@@ -27,37 +26,30 @@ document.getElementById("getButton").onclick = handleGet;
 function handlePost() {
   var par1 = par1Input.value;
   var par2 = par2Input.value;
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", handleAjaxResponse);
-  req.open("POST", "echo");
-  req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-  req.send("par1=" + par1 + "&par2=" + par2);
+//  req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+  $.ajax({
+    method: "POST",
+    url: "echo",
+    contentType: "application/json",
+    data: JSON.stringify({par1: par1, par2: par2})
+  })
+    .done(handleAjaxResponse)
+    .fail(handleAjaxError);
 }
 
 document.getElementById("postButton").onclick = handlePost;
 
 function handlePut() {
-  var data = new FormData();
-  data.append("par1", par1Input.value);
-  data.append("par2", par2Input.value);
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", handleAjaxResponse);
-  req.open("PUT", "echo");
-  req.send(data);
+  $.ajax({
+    method: "PUT",
+    url: "echo",
+    data: {par1: par1Input.value, par2: par2Input.value}
+  })
+    .done(handleAjaxResponse)
+    .fail(handleAjaxError);
 }
 
 document.getElementById("putButton").onclick = handlePut;
-
-function handleDelete() {
-  var par1 = par1Input.value;
-  var par2 = par2Input.value;
-  var req = new XMLHttpRequest();
-  req.addEventListener("load", handleAjaxResponse);
-  req.open("DELETE", "echo" + "?par1=" + par1 + "&par2=" + par2);
-  req.send();
-}
-
-document.getElementById("deleteButton").onclick = handleDelete;
 
 $("#deleteButton").on("click", function (evt) {
   var par1 = par1Input.value;
