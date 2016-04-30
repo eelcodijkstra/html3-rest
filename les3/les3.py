@@ -50,8 +50,11 @@ class Echo:
     def POST(self):
         web.header('Content-Type', 'application/json')
         data = web.input()
-        data["json"] = json.loads(web.data())
         data["contentType"] = web.ctx.env["CONTENT_TYPE"]
+        if data["contentType"] == "application/json":
+            data["json"] = json.loads(web.data())
+        else:
+            data["pars"] = web.data()
         data["method"] = "POST"
         return json.dumps(data)
 
